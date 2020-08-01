@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import router from "../router";
 import { api } from "./AxiosStore";
 
@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     setBlogs(state, blogs) {
       state.blogs = blogs
+    },
+    setActiveBlog(state, blog) {
+      state.activeBlog = blog
     }
     /*setComments(state, comments) {
       state.comments = comments
@@ -55,9 +58,16 @@ export default new Vuex.Store({
       }
     },
 
-    /*async getBlog({ commit, dispatch }, blogId) {
-
-    },*/
+    async getBlog({ commit, dispatch }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        console.log("got the blog:", res.data);
+        commit("setActiveBlog", res.data)
+        console.log(this.state.activeBlog)
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     async addBlog({ commit, dispatch, state }, blogData) {
       try {

@@ -21,10 +21,10 @@ const routes = [
     beforeEnter: authGuard,
   },
   {
-    path: "/blogs",
-    name: "Blogs",
+    path: '/blogs/:id',
+    name: 'Blog',
     component: () => import(/* webpackChunkName: "blogs" */ '../pages/Blogs.vue')
-  },
+  }
   /*{
     path: "/comments",
     name: "Comments",
