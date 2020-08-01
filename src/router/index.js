@@ -1,10 +1,9 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from "vue"
+import VueRouter from "vue-router"
 // @ts-ignore
-import Home from "../pages/Home.vue";
+import Home from "../pages/Home.vue"
 // @ts-ignore
-import Profile from "../pages/Profile.vue";
-import Blogs from "../pages/Blogs.vue";
+import Profile from "../pages/Profile.vue"
 import { authGuard } from "@bcwdev/auth0-vue";
 
 Vue.use(VueRouter);
@@ -24,15 +23,14 @@ const routes = [
   {
     path: "/blogs",
     name: "Blogs",
-    component: Blogs,
-    beforeEnter: authGuard,
+    component: () => import(/* webpackChunkName: "blogs" */ '../pages/Blogs.vue')
   },
-  {
+  /*{
     path: "/comments",
     name: "Comments",
     component: Comments,
     beforeEnter: authGuard,
-  },
+  },*/
 ];
 
 const router = new VueRouter({

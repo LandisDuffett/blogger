@@ -8,13 +8,14 @@
 <script>
 import Navbar from "@/components/navbar";
 import { onAuth } from "@bcwdev/auth0-vue";
-import { setBearer, api } from "./store/AxiosStore";
+import { setBearer, api, resetBearer } from "./store/AxiosStore";
 export default {
   name: "App",
   async beforeCreate() {
     await onAuth();
     if (this.$auth.isAuthenticated) {
       setBearer(this.$auth.bearer);
+      this.$store.dispatch("getProfile");
       //NOTE if you want to do something everytime the user logs in, do so here
     }
   },
