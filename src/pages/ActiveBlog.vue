@@ -2,8 +2,8 @@
   <div class="blogs">
     <h3>Title:{{blog.blog.title}}</h3>
     <img class="img-fluid" :src="blog.imgUrl" />
-    <h3>{{blog.blog.body}}</h3>
-    <comment v-for="comment in comments" :commentData="comment" :key="comment.id"></comment>
+    <h3>Blog:{{blog.blog.body}}</h3>
+    <h3 v-for="comment in comments" :key="comment._id">Comment:{{comment.body}}</h3>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
       return this.$store.state.activeBlog;
     },
     comments() {
-      return this.$store.state.comments;
+      return this.$store.state.activeBlog.comments;
     },
   },
   methods: {},
