@@ -119,7 +119,7 @@
 <script>
 import Blog from "../components/Blog";
 export default {
-  name: "home",
+  name: "blogs",
   data() {
     return {
       newBlog: {},

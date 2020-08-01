@@ -9,7 +9,6 @@ export default new Vuex.Store({
   state: {
     blogs: [],
     comments: [],
-    activeComments: [],
     activeBlog: [],
     profile: {},
   },
@@ -22,16 +21,10 @@ export default new Vuex.Store({
     },
     setActiveBlog(state, blog) {
       state.activeBlog = blog
-    }
-    /*setComments(state, comments) {
+    },
+    setComments(state, comments) {
       state.comments = comments
     },
-    setActiveBlog(state, blog) {
-      state.activeBlog = blog
-    },
-    setActiveComments(state, comments) {
-      state.activeComments = comments
-    }*/
   },
   actions: {
     setBearer({ }, bearer) {
@@ -79,19 +72,22 @@ export default new Vuex.Store({
       }
     },
 
-    /*async deleteBlog({ commit, dispatch }, blogId) {
-
+    async getComments({ commit, dispatch }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        commit("setComments", res.data.comments)
+      } catch (error) {
+        console.error(error);
+      }
     },
 
-    async addComment({ commit, dispatch }, blogId) {
-
+    async addComment({ commit, dispatch, state }, commentData) {
+      try {
+        let res = await api.post("comments", commentData)
+        dispatch("getComments")
+      } catch (error) {
+        console.error(error);
+      }
     },
-
-    async deleteComment({ commit, dispatch }, blogId) {
-
-    },*/
-
-
-
   },
-});
+})

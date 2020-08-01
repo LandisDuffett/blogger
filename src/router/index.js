@@ -23,14 +23,8 @@ const routes = [
   {
     path: '/blogs/:id',
     name: 'Blog',
-    component: () => import(/* webpackChunkName: "blogs" */ '../pages/Blogs.vue')
+    component: () => import(/* webpackChunkName: "activeblog" */ '../pages/ActiveBlog.vue')
   }
-  /*{
-    path: "/comments",
-    name: "Comments",
-    component: Comments,
-    beforeEnter: authGuard,
-  },*/
 ];
 
 const router = new VueRouter({
