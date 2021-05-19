@@ -1,26 +1,27 @@
 <template>
   <div class="car col-3 border rounded mb-3" @click="moveToBlogPage">
     <!-- add router link dynamically -->
-    <router-link :to="{name: 'Blog', params: {id: blogData._id}}">
-      <h3>{{blogData.title}}</h3>
+    <router-link :to="{name: 'Blog', params: {id: commentData._id}}">
+      <h3>{{commentData.creator.email}}</h3>
     </router-link>
-    <img class="img-fluid" :src="blogData.imgUrl" />
-    <h3>{{blogData.body}}</h3>
+    <h3>{{commentData.body}}</h3>
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "blog",
-  props: ["blogData"],
+  name: "comment",
+  props: ["commentData"],
   data() {
     return {};
   },
   computed: {},
   methods: {
     moveToBlogPage() {
-      this.$router.push({ name: "Blog", params: { id: this.blogData._id } });
+      this.$router.push({
+        name: "Comment",
+        params: { id: this.commentData._id },
+      });
     },
   },
   components: {},

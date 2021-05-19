@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import router from "../router";
 import { api } from "./AxiosStore";
 
@@ -9,7 +9,6 @@ export default new Vuex.Store({
   state: {
     blogs: [],
     comments: [],
-    activeComments: [],
     activeBlog: [],
     profile: {},
   },
@@ -19,16 +18,13 @@ export default new Vuex.Store({
     },
     setBlogs(state, blogs) {
       state.blogs = blogs
-    }
-    /*setComments(state, comments) {
-      state.comments = comments
     },
     setActiveBlog(state, blog) {
       state.activeBlog = blog
     },
-    setActiveComments(state, comments) {
-      state.activeComments = comments
-    }*/
+    setComments(state, comments) {
+      state.comments = comments
+    },
   },
   actions: {
     setBearer({ }, bearer) {
@@ -55,9 +51,16 @@ export default new Vuex.Store({
       }
     },
 
-    /*async getBlog({ commit, dispatch }, blogId) {
-
-    },*/
+    async getBlog({ commit, dispatch }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        console.log("got the blog:", res.data);
+        commit("setActiveBlog", res.data)
+        console.log(this.state.activeBlog)
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     async addBlog({ commit, dispatch, state }, blogData) {
       try {
@@ -69,19 +72,22 @@ export default new Vuex.Store({
       }
     },
 
-    /*async deleteBlog({ commit, dispatch }, blogId) {
-
+    async getComments({ commit, dispatch }, blogId) {
+      try {
+        let res = await api.get("blogs/" + blogId)
+        commit("setComments", res.data.comments)
+      } catch (error) {
+        console.error(error);
+      }
     },
 
-    async addComment({ commit, dispatch }, blogId) {
-
+    async addComment({ commit, dispatch, state }, commentData) {
+      try {
+        let res = await api.post("comments", commentData)
+        dispatch("getComments")
+      } catch (error) {
+        console.error(error);
+      }
     },
-
-    async deleteComment({ commit, dispatch }, blogId) {
-
-    },*/
-
-
-
   },
-});
+})
